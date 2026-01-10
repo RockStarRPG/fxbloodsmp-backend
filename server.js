@@ -9,7 +9,7 @@ app.use(express.json());
 const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1459580684975734886/yUcfD2p5PzMazNQnKapCoENQ7LjOrcWyLpIl_Qhmb9t2QHV1VUkrn0WHC-kft5iZ7rVn";
 
 app.get("/", (req, res) => {
-  res.send("Backend running");
+  res.send("Backend running OK");
 });
 
 app.post("/payment-done", async (req, res) => {
@@ -19,7 +19,7 @@ app.post("/payment-done", async (req, res) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      content: `💰 **New Payment Received**\n👤 User: ${username}\n💵 Amount: ${amount}\n📲 Method: ${method}`
+      content: `💰 New Payment\nUser: ${username}\nAmount: ${amount}\nMethod: ${method}`
     })
   });
 
