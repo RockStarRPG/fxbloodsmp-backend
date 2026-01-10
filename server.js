@@ -1,32 +1,29 @@
 const express = require("express");
 const cors = require("cors");
+const fetch = require("node-fetch");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-let payments = {}; // temporary storage
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1459580684975734886/yUcfD2p5PzMazNQnKapCoENQ7LjOrcWyLpIl_Qhmb9t2QHV1VUkrn0WHC-kft5iZ7rVn";
 
-app.post("/paid", (req, res) => {
-  const { username, method } = req.body;
-  payments[username] = "pending";
-
-  // DISCORD WEBHOOK (add later)
-  console.log(`Payment request from ${username} via ${method}`);
-
-  res.sendStatus(200);
+app.get("/", (req, res) => {
+  res.send("Backend running");
 });
 
-app.get("/status/:user", (req, res) => {
-  const user = req.params.user;
-  res.json({ status: payments[user] || "none" });
-});
+app.post("/payment-done", async (req, res) => {
+  const { username, amount, method } = req.body;
 
-// ADMIN CONFIRM
-app.get("/confirm/:user", (req, res) => {
-  const user = req.params.user;
-  payments[user] = "done";
-  res.send("Payment confirmed");
+  await fetch(DISCORD_WEBHOOK, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content: `💰 **New Payment Received**\n👤 User: ${username}\n💵 Amount: ${amount}\n📲 Method: ${method}`
+    })
+  });
+
+  res.json({ success: true });
 });
 
 const PORT = process.env.PORT || 3000;
