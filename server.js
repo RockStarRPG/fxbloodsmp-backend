@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const DISCORD_WEBHOOK = "YOUR_WEBHOOK_URL";
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1459580684975734886/yUcfD2p5PzMazNQnKapCoENQ7LjOrcWyLpIl_Qhmb9t2QHV1VUkrn0WHC-kft5iZ7rVn";
 
 app.get("/", (req, res) => {
   res.send("Backend running OK");
