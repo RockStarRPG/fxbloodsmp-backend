@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1459580684975734886/yUcfD2p5PzMazNQnKapCoENQ7LjOrcWyLpIl_Qhmb9t2QHV1VUkrn0WHC-kft5iZ7rVn";
+const DISCORD_WEBHOOK = "YOUR_WEBHOOK_URL";
 
 app.get("/", (req, res) => {
   res.send("Backend running OK");
